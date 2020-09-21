@@ -24,7 +24,7 @@ function Home() {
             id="49538094"
             title="Kenwood Mix Stand Mixer for Baking, sylish Kitchen Mixer with K-veater, Dough Hook & Whisk, 5 Litre Glass Bowl"
             rating={4}
-            price="239.00"
+            price="239"
             image="https://images-na.ssl-images-amazon.com/images/I/81O%2BGNdkzKL._AC-SX450_.jpg"
           />
         </div>
@@ -56,7 +56,7 @@ function Home() {
         <div className="home__row">
           <Product
             id="90829332"
-            title="Samsung LC49RG9SSUXEN 49' Curved LED Gaming Monitor - Super Ultra Wide Dual WQHD 5120 x 1440"
+            title="Samsung LC49RG9SSUXEN 49' Curved LED Gaming Monitor - Super Ultra Wide Dual WQHD 5120 x 1Z"
             rating={4}
             price="1099.99"
             image="https://images-na.ssl-images-amazon.com/images/I/6125mFrzr6L._AC-SX355_.jpg"
