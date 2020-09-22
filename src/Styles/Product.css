@@ -8,6 +8,11 @@
   width: 100%;
   background-color: white;
   z-index: 1;
+  transition: transform 450ms;
+}
+
+.product:hover {
+  transform: scale(1.08);
 }
 
 .product__info {
