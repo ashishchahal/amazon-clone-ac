@@ -1,5 +1,6 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { Link, useHistory } from "react-router-dom";
+import axios from "../axios";
 import { useStateValue } from "../StateProvider";
 import "../Styles/Payment.css";
 import CheckoutProduct from "./CheckoutProduct";
@@ -10,6 +11,8 @@ import { getBasketTotal } from "../reducer";
 function Payment() {
   const [{ basket, user }, dispatch] = useStateValue();
 
+  const history = useHistory();
+
   const stripe = useStripe();
   const elements = useElements();
 
@@ -18,6 +21,22 @@ function Payment() {
 
   const [disabled, setDisabled] = useState(null);
   const [error, setError] = useState(true);
+  const [clientSecret, setClientSecret] = useState(true);
+
+  useEffect(() => {
+    //generate the special stripe secret which allows us to charge a customer
+
+    const getClientSecret = async () => {
+      const response = await axios({
+        method: "post",
+        //Stripe expects the total in a currencies subunits
+        url: `/payments/create?total=${getBasketTotal(basket) * 100}`,
+      });
+      setClientSecret(response.data.clientSecret);
+    };
+
+    getClientSecret();
+  }, [basket]);
 
   const handleSubmit = async (event) => {
     //do all the fancy stripe stuff
@@ -25,6 +44,22 @@ function Payment() {
 
     // allows the button to click only once & not place multiple payments
     setProcessing(true);
+
+    const payload = await stripe
+      .confirmCardPayment(clientSecret, {
+        paymnet_method: {
+          card: elements.getElement(CardElement),
+        },
+      })
+      .then(({ paymentIntent }) => {
+        // paymentIntent = payment confirmation
+
+        setSucceeded(true);
+        setError(null);
+        setProcessing(false);
+
+        history.replace("/orders");
+      });
   };
 
   const handleChange = (event) => {
