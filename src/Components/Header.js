@@ -24,10 +24,10 @@ function Header() {
         />
       </Link>
 
-      <dv className="header__search">
+      <div className="header__search">
         <input className="header__searchInput" type="text" name="" id="" />
         <SearchIcon className="header__searchIcon" />
-      </dv>
+      </div>
 
       <div className="header__nav">
         <Link to={!user && "/login"}>
